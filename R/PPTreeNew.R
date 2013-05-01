@@ -235,7 +235,7 @@ PP.classify <- function(test.data, true.class, Tree.result, Rule, ...) {
             proj.test <- as.matrix(test.data) %*%
                 as.matrix(Alpha.Keep[id.proj,])
             ##  proj.test<-(proj.test-mean(proj.test))
-            proj.test <- as.real(proj.test)
+            proj.test <- as.double(proj.test)
             class.temp <- t(proj.test < C.Keep[id.proj,Rule]) 
             test.class.index <- rbind(test.class.index, class.temp)
             a <- PP.Class.index(class.temp, test.class.index, test.data,
