@@ -4,7 +4,8 @@
 \title{Find PP tree structure}
 
 \usage{
-PP.Tree(PPmethod, i.class, i.data, weight = TRUE, r = NULL,  lambda = NULL, cooling = 0.999, temp = 1, energy = 0.01,  ...) 
+PP.Tree(PPmethod, i.class, i.data, weight = TRUE, r = NULL,  
+          lambda = NULL, cooling = 0.999, temp = 1, energy = 0.01,  ...) 
 }
 \description{
 Find tree structure using projection pursuit in each split.

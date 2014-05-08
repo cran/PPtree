@@ -21,15 +21,15 @@ void pda(int *fn, int *fp, int *groups,double *fvals,int *groupraw,int *gname, i
 
   n=*fn; p=*fp; g=*groups;
 
-  mean = Calloc(g*p,double); 
+  mean = (double *) R_alloc(g*p, sizeof(double)); 
   zero(mean, g*p); 
-  ovmean = Calloc(p,double); 
+  ovmean = (double *) R_alloc(p, sizeof(double)); 
   zero(ovmean, p); 
-  det = Calloc(1,double);
+  det = (double *) R_alloc(1, sizeof(double)); 
   right = n-1; 
   left = 0;
 
-  group = Calloc(n,int); 
+  group = (int *) R_alloc(n, sizeof(int)); 
   zero_int(group, n); 
 
   if(gname[(g-1)] !=g)
@@ -49,8 +49,10 @@ void pda(int *fn, int *fp, int *groups,double *fvals,int *groupraw,int *gname, i
      } 
    } 
 
-cov = Calloc(p*p,double);zero(cov, p*p); 
-tempcov = Calloc(p*p,double);zero(tempcov,p*p); 
+cov = (double *) R_alloc(p*p, sizeof(double));
+zero(cov, p*p); 
+tempcov = (double *) R_alloc(p*p, sizeof(double));
+zero(tempcov,p*p); 
 
 
  for (i=0; i<n; i++) 
@@ -68,7 +70,7 @@ tempcov = Calloc(p*p,double);zero(tempcov,p*p);
 
  /* printf("%f\n",*var);*/
  memcpy(tempcov,cov,p*p*sizeof(double));
- pivot=Calloc(p,int);
+ pivot=(int *) R_alloc(p, sizeof(int)); 
  ludcomp(tempcov,p,pivot,det); 
  *val = *det; 
 
@@ -90,13 +92,13 @@ tempcov = Calloc(p*p,double);zero(tempcov,p*p);
  else  *val = 1-*val/(*det); 
  /* printf("I :%f\n",*val); */
 
-   Free(cov);
+/*   Free(cov);
    Free(tempcov);
    Free(mean);
    Free(ovmean);
    Free(pivot);
    Free(det);
-   Free(group);
+   Free(group); */
 
 } 
 

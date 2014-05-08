@@ -24,22 +24,22 @@ void cartgini(int *fn, int *fp, int *groups,double *fvals,int *group, int *ngrou
     p = *fp; 
     g = *groups;
 
-    vals = Calloc(p*n, double); 
+    vals = (double *) R_alloc(p*n, sizeof(double)); 
     for (i = 0; i < p; i++) { 
         for (j = 0; j < n; j++) vals[i * n + j] = fvals[i * n + j];
     }
     right = n - 1; 
     left = 0;
-    xindex = Calloc(n, int);
+    xindex = (int *) R_alloc(n, sizeof(int));
     zero_int(xindex, n);
     for (i = 0; i < n; i++) xindex[i] = group[i]; 
     sort_group(vals, xindex, fp, fn, left, right); 
     
     /* data relocation and make index */ 
-    x = Calloc(n, double); 
+    x = (double *) R_alloc(n, sizeof(double));  
     zero(x, n); 
     minindex = 0; 
-    nright = Calloc(g, int);
+    nright = (int *) R_alloc(g, sizeof(int)); 
     for (l = 0; l < p; l++) { 
         for (i = 0; i < n; i++) x[i] = vals[l * n + i]; 
         
@@ -70,10 +70,10 @@ void cartgini(int *fn, int *fp, int *groups,double *fvals,int *group, int *ngrou
     }
     *val = 1 - minindex;
 
-    Free(vals);
+/*    Free(vals);
     Free(x);
     Free(xindex);
-    Free(nright);
+    Free(nright); */
 }
 
 /***********************
@@ -88,23 +88,25 @@ void cartentropy(int *fn, int *fp, int *groups,double *fvals,int *group, int *ng
     
     n=*fn; p=*fp; g=*groups;
     
-    vals = Calloc(p*n,double); 
+    vals = (double *) R_alloc(p*n, sizeof(double));  
     for (i=0; i<p; i++) { 
         for (j=0; j<n; j++) vals[i*n+j] = fvals[i*n+j];
     }
   
     right = n-1; 
     left = 0;
-    xindex = Calloc(n,int);zero_int(xindex,n); 
+    xindex = (int *) R_alloc(n, sizeof(int)); 
+    zero_int(xindex,n); 
     for (i=0; i<n; i++) 
         xindex[i] = group[i]; 
     sort_group(vals,xindex,fp,fn,left,right); 
     
     /* data relocation and make index */ 
-    x = Calloc(n,double); zero(x,n); 
+    x = (double *) R_alloc(n, sizeof(double)); 
+    zero(x,n); 
     
     minindex=0; 
-    nright = Calloc(g,int);
+    nright = (int *) R_alloc(g, sizeof(int));
     for(l=0; l<p; l++) { 
         for (i=0; i<n; i++) x[i] = vals[l*n+i]; 
         left=0; 
@@ -133,7 +135,7 @@ void cartentropy(int *fn, int *fp, int *groups,double *fvals,int *group, int *ng
     }
     *val = 1 - minindex / log(g);
 
-    Free(x);
+/*    Free(x);
     Free(xindex);
-    Free(nright);
+    Free(nright);*/
 } 

@@ -109,7 +109,7 @@ void orthonormal (double *projvals, int *fn, int *fp)
   int i,j, k,p,n;
   float *ip, norm;
   p=*fp; n=*fn;
-  ip = Calloc(p,float);
+  ip = (float *) R_alloc(p, sizeof(float)); 
   /*  
   for (i=0; i<p; i++)
   { 
@@ -146,7 +146,7 @@ void orthonormal (double *projvals, int *fn, int *fp)
     for (k=0; k<n; k++)     
        projvals[i*n+k] /= norm;
   }
-  Free(ip);
+/*  Free(ip);*/
 }
 
 /*
@@ -156,7 +156,7 @@ void orthonormal (double *projvals, int *fn, int *fp)
   int i,j, k,p,n;
   float *ip, norm;
   p=*fp; n=*fn;
-  ip = Calloc(p,float);
+  ip = (float *) R_alloc(p, sizeof(float)); 
   for (i=0; i<p;i++)
   { 
     for (j=0; j<i; j++)
@@ -198,7 +198,7 @@ void optimize1(int *fn, int *fp, int *groups, double *fvals, int *groupraw,int *
 
 
 
-   group = Calloc(n,int); 
+   group = (int *) R_alloc(n, sizeof(int)); 
   zero_int(group, n); 
 
   if(gname[(g-1)] !=g)
@@ -211,12 +211,15 @@ void optimize1(int *fn, int *fp, int *groups, double *fvals, int *groupraw,int *
 
   /********************************/
   
-  proj_best = Calloc(projp*projn,double);zero(proj_best,projp*projn);
-  proj_work = Calloc(projp*projn,double);zero(proj_work,projp*projn);
-  projdata = Calloc(projp*n,double); zero(projdata,projp*n);
-  index_best = Calloc(1,double);
-  index_work = Calloc(1,double);
-  sum = Calloc(1,double);
+  proj_best = (double *) R_alloc(projp*projn, sizeof(double)); 
+  zero(proj_best,projp*projn);
+  proj_work = (double *) R_alloc(projp*projn, sizeof(double)); 
+  zero(proj_work,projp*projn);
+  projdata = (double *) R_alloc(projp*n, sizeof(double)); 
+   zero(projdata,projp*n);
+  index_best = (double *) R_alloc(1, sizeof(double)); 
+  index_work = (double *) R_alloc(1, sizeof(double)); 
+  sum = (double *) R_alloc(1, sizeof(double)); 
   /*  initrandom(start); */
   GetRNGstate();
   iszero(fp,projdim,proj_best,sum);
@@ -313,13 +316,13 @@ void optimize1(int *fn, int *fp, int *groups, double *fvals, int *groupraw,int *
           proj[i*projn+j] =proj_best[i*projn+j];  
     *val = *index_best;
     PutRNGstate();
-    Free(proj_best);
+/*    Free(proj_best);
     Free(proj_work);
     Free(projdata);
     Free(index_work);
     Free(index_best);
     Free(sum);
-    Free(group);
+    Free(group); */
 
 }
 
@@ -343,7 +346,7 @@ void optimize2(int *fn, int *fp, int *groups, double *fvals, int *groupraw, int 
   temp_end = 0.001;
   maxproj=1000;
 
-   group = Calloc(n,int); 
+   group = (int *) R_alloc(n, sizeof(int));
   zero_int(group, n); 
 
   if(gname[(g-1)] !=g)
@@ -358,12 +361,15 @@ void optimize2(int *fn, int *fp, int *groups, double *fvals, int *groupraw, int 
   /*  printf("in Optimize %f\n",*var);*/
   /********************************/
   
-  proj_best = Calloc(projp*projn,double);zero(proj_best,projp*projn);
-  proj_work = Calloc(projp*projn,double);zero(proj_work,projp*projn);
-  projdata = Calloc(projp*n,double); zero(projdata,projp*n);
-  index_best = Calloc(1,double);
-  index_work = Calloc(1,double);
-  sum = Calloc(1,double);
+  proj_best = (double *) R_alloc(projp*projn, sizeof(double)); 
+  zero(proj_best,projp*projn);
+  proj_work = (double *) R_alloc(projp*projn, sizeof(double)); 
+  zero(proj_work,projp*projn);
+  projdata = (double *) R_alloc(projp*n, sizeof(double)); 
+  zero(projdata,projp*n);
+  index_best = (double *) R_alloc(1, sizeof(double)); 
+  index_work = (double *) R_alloc(1, sizeof(double)); 
+  sum = (double *) R_alloc(1, sizeof(double)); 
   /*  initrandom(start); */
   GetRNGstate();
   iszero(fp,projdim,proj_best,sum);
@@ -469,13 +475,13 @@ void optimize2(int *fn, int *fp, int *groups, double *fvals, int *groupraw, int 
     *val = *index_best;
     /*   printf("iteration = %d\n",kt);*/
     PutRNGstate();
-    Free(proj_best);
+/*    Free(proj_best);
     Free(proj_work);
     Free(projdata);
     Free(index_work);
     Free(index_best);
     Free(sum);
-    Free(group);
+    Free(group); */
 
 }
 
@@ -501,7 +507,7 @@ void optimize3(int *fn, int *fp, int *groups, double *fvals, int *groupraw,int *
   maxproj=1000;
 
 
-   group = Calloc(n,int); 
+   group = (int *) R_alloc(n, sizeof(int)); 
   zero_int(group, n); 
 
   if(gname[(g-1)] !=g)
@@ -515,16 +521,20 @@ void optimize3(int *fn, int *fp, int *groups, double *fvals, int *groupraw,int *
 
   /********************************/
   
-  proj_best = Calloc(projp*projn,double);zero(proj_best,projp*projn);
-  proj_work = Calloc(projp*projn,double);zero(proj_work,projp*projn);
-  proj_temp = Calloc(projp*projn,double);zero(proj_temp,projp*projn);
+  proj_best = (double *) R_alloc(projp*projn, sizeof(double)); 
+  zero(proj_best,projp*projn);
+  proj_work = (double *) R_alloc(projp*projn, sizeof(double)); 
+  zero(proj_work,projp*projn);
+  proj_temp = (double *) R_alloc(projp*projn, sizeof(double)); 
+  zero(proj_temp,projp*projn);
 
-  projdata = Calloc(projp*n,double); zero(projdata,projp*n);
-  index_best = Calloc(1,double);
-  index_work = Calloc(1,double);
-  index_temp = Calloc(1,double);
+  projdata = (double *) R_alloc(projp*n, sizeof(double)); 
+   zero(projdata,projp*n);
+  index_best = (double *) R_alloc(1, sizeof(double)); 
+  index_work = (double *) R_alloc(1, sizeof(double)); 
+  index_temp = (double *) R_alloc(1, sizeof(double)); 
 
-  sum = Calloc(1,double);
+  sum = (double *) R_alloc(1, sizeof(double)); 
   /*  initrandom(start); */
   GetRNGstate();
   iszero(fp,projdim,proj_best,sum);
@@ -767,7 +777,7 @@ void optimize3(int *fn, int *fp, int *groups, double *fvals, int *groupraw,int *
 
       /*    printf("%d\n",kt);*/
     PutRNGstate();
-    Free(proj_best);
+/*    Free(proj_best);
     Free(proj_work);
     Free(proj_temp);
     Free(projdata);
@@ -775,7 +785,7 @@ void optimize3(int *fn, int *fp, int *groups, double *fvals, int *groupraw,int *
     Free(index_best);
     Free(index_temp);
     Free(sum);
-    Free(group);
+    Free(group); */
 
 }
 

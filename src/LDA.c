@@ -26,7 +26,7 @@ void ludcomp(double *a,int n,int *Pivot,double *val)
     int i,j,k,ier;
     double *s,det,temp,c=0;
     det=1;
-    s = Calloc(n,double);
+    s = (double *) R_alloc(n, sizeof(double)); 
     for(i=0;i<n; i++)
     {  s[i] = a[i*n+1];
        for(j=1; j<n; j++)
@@ -66,7 +66,7 @@ void ludcomp(double *a,int n,int *Pivot,double *val)
     det *= a[(n-1)*n+(n-1)];
     ier=0; 
     *val = det;
-    Free(s);
+/*    Free(s);*/
 
 }                               
 
@@ -167,15 +167,15 @@ void discriminant1(int *fn, int *fp, int *groups,double *fvals,int *groupraw,int
 
   n=*fn; p=*fp; g=*groups;
 
-  mean = Calloc(g*p,double); 
+  mean = (double *) R_alloc(g*p, sizeof(double)); 
   zero(mean, g*p); 
-  ovmean = Calloc(p,double); 
+  ovmean = (double *) R_alloc(p, sizeof(double)); 
   zero(ovmean, p); 
-  det = Calloc(1,double);
+  det = (double *) R_alloc(1, sizeof(double)); 
   right = n-1; 
   left = 0;
 
-  group = Calloc(n,int); 
+  group = (int *) R_alloc(n, sizeof(int)); 
   zero_int(group, n); 
 
   if(gname[(g-1)] !=g)
@@ -195,8 +195,10 @@ void discriminant1(int *fn, int *fp, int *groups,double *fvals,int *groupraw,int
      } 
    } 
 
-cov = Calloc(p*p,double);zero(cov, p*p); 
-tempcov = Calloc(p*p,double);zero(tempcov,p*p); 
+cov = (double *) R_alloc(p*p, sizeof(double)); 
+zero(cov, p*p); 
+tempcov = (double *) R_alloc(p*p, sizeof(double)); 
+zero(tempcov,p*p); 
 
 
  for (i=0; i<n; i++) 
@@ -212,7 +214,7 @@ tempcov = Calloc(p*p,double);zero(tempcov,p*p);
  
 
  memcpy(tempcov,cov,p*p*sizeof(double));
- pivot=Calloc(p,int);
+ pivot=(int *) R_alloc(p, sizeof(int));
  ludcomp(tempcov,p,pivot,det); 
 
  *val = *det; 
@@ -233,13 +235,13 @@ tempcov = Calloc(p*p,double);zero(tempcov,p*p);
  else  *val = 1 - *val / (*det); 
 
 
-   Free(cov);
+/*   Free(cov);
    Free(tempcov);
    Free(mean);
    Free(ovmean);
    Free(pivot);
    Free(det);
-   Free(group);
+   Free(group);  */
 
 } 
 
@@ -257,16 +259,16 @@ void discriminant2(int *fn, int *fp, int *groups,double *fvals,int *groupraw,int
 
   n=*fn; p=*fp; g=*groups;
 
-  mean = Calloc(g*p,double); 
+  mean = (double *) R_alloc(g*p, sizeof(double));
   zero(mean, g*p); 
-  ovmean = Calloc(p,double); 
+  ovmean = (double *) R_alloc(p, sizeof(double)); 
   zero(ovmean, p); 
-  det = Calloc(1,double);
+  det = (double *) R_alloc(1, sizeof(double)); 
   right = n-1; 
   left = 0;
 
 
-   group = Calloc(n,int); 
+   group = (int *) R_alloc(n, sizeof(int)); ; 
   zero_int(group, n); 
 
   if(gname[(g-1)] !=g)
@@ -286,8 +288,10 @@ void discriminant2(int *fn, int *fp, int *groups,double *fvals,int *groupraw,int
      } 
    } 
 
-cov = Calloc(p*p,double);zero(cov, p*p); 
-tempcov = Calloc(p*p,double);zero(tempcov,p*p); 
+cov = (double *) R_alloc(p*p, sizeof(double)); 
+zero(cov, p*p); 
+tempcov = (double *) R_alloc(p*p, sizeof(double)); 
+zero(tempcov,p*p); 
 
 
  for (i=0; i<n; i++) 
@@ -303,7 +307,7 @@ tempcov = Calloc(p*p,double);zero(tempcov,p*p);
  
 
  memcpy(tempcov,cov,p*p*sizeof(double));
- pivot=Calloc(p,int);
+ pivot=(int *) R_alloc(p, sizeof(int)); 
  ludcomp(tempcov,p,pivot,det); 
 
  *val = *det; 
@@ -323,13 +327,13 @@ tempcov = Calloc(p*p,double);zero(tempcov,p*p);
  if((*det) < 1.0e-8) {*val = 0; REprintf("ZERO VARIANCE\n");}
  else  *val = 1-*val/(*det); 
 
-   Free(cov);
+/*   Free(cov);
    Free(tempcov);
    Free(mean);
    Free(ovmean);
    Free(pivot);
    Free(det);
-   Free(group);
+   Free(group); */
 
 } 
 
@@ -346,15 +350,15 @@ void discriminant3(int *fn, int *fp, int *groups,double *fvals,int *groupraw,int
 
   n=*fn; p=*fp; g=*groups;
 
-  mean = Calloc(g*p,double); 
+  mean = (double *) R_alloc(g*p, sizeof(double)); 
   zero(mean, g*p); 
-  ovmean = Calloc(p,double); 
+  ovmean = (double *) R_alloc(p, sizeof(double)); 
   zero(ovmean, p); 
   right = n-1; 
   left = 0;
 
 
-   group = Calloc(n,int); 
+   group = (int *) R_alloc(n, sizeof(int)); 
   zero_int(group, n); 
 
   if(gname[(g-1)] !=g)
@@ -396,9 +400,9 @@ void discriminant3(int *fn, int *fp, int *groups,double *fvals,int *groupraw,int
   *val = *val / pow(det,(1/(double)rr)); 
 
  
-   Free(mean);
+/*   Free(mean);
    Free(ovmean);
-   Free(group);
+   Free(group); */
 
 } 
 
